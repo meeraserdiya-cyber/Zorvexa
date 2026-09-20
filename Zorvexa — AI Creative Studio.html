@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zorvexa — AI Creative Studio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #ffffff;
+        color: #111;
+        min-height: 100vh;
+    }
+
+    /* Custom scrollbar for modals */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #999;
+    }
+
+    @keyframes popup {
+        from {
+            transform: scale(0.94);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .modal-box {
+        animation: popup 0.18s ease;
+    }
+</style>
+</head>
+
+<body class="bg-white text-slate-900">
+
+<!-- ================= HEADER ================= -->
+<header class="h-[72px] border-b border-slate-200 flex items-center justify-between px-[5%] sticky top-0 z-50 bg-white/96 backdrop-blur-[15px]">
+    <div class="flex items-center gap-[11px] text-[23px] font-extrabold tracking-tight">
+        <div class="w-[38px] h-[38px] rounded-[11px] flex items-center justify-center bg-slate-900 text-white font-black text-[21px] shadow-sm">Z</div>
+        <span>Zorvexa</span>
+    </div>
+    <div class="flex gap-2.5">
+        <button class="bg-slate-900 text-white px-5 py-3 rounded-[12px] text-[15px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer" onclick="openLogin()">
+            Login
+        </button>
+    </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="text-center pt-[95px] pb-[70px] px-5">
+    <h1 class="text-[clamp(42px,7vw,76px)] tracking-[-4px] leading-[1] mb-[25px] font-black">
+        Create anything with AI.
+    </h1>
+    <p class="max-w-[680px] mx-auto text-slate-600 text-[18px] leading-[1.7] mb-[30px]">
+        Zorvexa is an AI creative studio for stories, images, voices, thumbnails and visual content.
+    </p>
+    <button class="bg-slate-900 text-white px-6 py-3.5 rounded-[12px] text-[15px] font-bold hover:opacity-90 transition shadow-md cursor-pointer" onclick="scrollToTools()">
+        Start Creating
+    </button>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<section class="w-[min(1180px,92%)] mx-auto pb-[90px]" id="tools">
+    <div class="text-center mb-[30px]">
+        <h2 class="text-[35px] font-extrabold mb-[8px]">AI Tools</h2>
+        <p class="text-slate-500">Tap any tool to open its workspace.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[17px]">
+        <!-- TTS -->
+        <div class="border border-slate-200 rounded-[20px] p-[25px] min-h-[180px] bg-white cursor-pointer transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)] shadow-[0_5px_25px_rgba(0,0,0,0.035)]" onclick="openTool('tts')">
+            <div class="text-[34px] mb-[20px]">🔊</div>
+            <h3 class="text-[18px] font-bold mb-[9px]">Text to Speech</h3>
+            <p class="text-slate-500 text-[14px] leading-[1.55]">Convert text and scripts into natural AI voice.</p>
+        </div>
+
+        <!-- Image -->
+        <div class="border border-slate-200 rounded-[20px] p-[25px] min-h-[180px] bg-white cursor-pointer transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)] shadow-[0_5px_25px_rgba(0,0,0,0.035)]" onclick="openTool('image')">
+            <div class="text-[34px] mb-[20px]">🖼️</div>
+            <h3 class="text-[18px] font-bold mb-[9px]">Text to Image</h3>
+            <p class="text-slate-500 text-[14px] leading-[1.55]">Create images from your text prompts.</p>
+        </div>
+
+        <!-- Editor -->
+        <div class="border border-slate-200 rounded-[20px] p-[25px] min-h-[180px] bg-white cursor-pointer transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)] shadow-[0_5px_25px_rgba(0,0,0,0.035)]" onclick="openTool('editor')">
+            <div class="text-[34px] mb-[20px]">✏️</div>
+            <h3 class="text-[18px] font-bold mb-[9px]">Image Editor</h3>
+            <p class="text-slate-500 text-[14px] leading-[1.55]">Upload and edit your images using AI.</p>
+        </div>
+
+        <!-- Story -->
+        <div class="border border-slate-200 rounded-[20px] p-[25px] min-h-[180px] bg-white cursor-pointer transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)] shadow-[0_5px_25px_rgba(0,0,0,0.035)]" onclick="openTool('story')">
+            <div class="text-[34px] mb-[20px]">📖</div>
+            <h3 class="text-[18px] font-bold mb-[9px]">Text to Story</h3>
+            <p class="text-slate-500 text-[14px] leading-[1.55]">Create stories, scripts and creative content.</p>
+        </div>
+
+        <!-- Storyboard -->
+        <div class="border border-slate-200 rounded-[20px] p-[25px] min-h-[180px] bg-white cursor-pointer transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)] shadow-[0_5px_25px_rgba(0,0,0,0.035)]" onclick="openTool('storyboard')">
+            <div class="text-[34px] mb-[20px]">🎬</div>
+            <h3 class="text-[18px] font-bold mb-[9px]">Story to Storyboard</h3>
+            <p class="text-slate-500 text-[14px] leading-[1.55]">Convert your story into visual scenes.</p>
+        </div>
+
+        <!-- Background -->
+        <div class="border border-slate-200 rounded-[20px] p-[25px] min-h-[180px] bg-white cursor-pointer transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)] shadow-[0_5px_25px_rgba(0,0,0,0.035)]" onclick="openTool('background')">
+            <div class="text-[34px] mb-[20px]">🌄</div>
+            <h3 class="text-[18px] font-bold mb-[9px]">Background Generator</h3>
+            <p class="text-slate-500 text-[14px] leading-[1.55]">Create cinematic backgrounds from prompts.</p>
+        </div>
+
+        <!-- Thumbnail -->
+        <div class="border border-slate-200 rounded-[20px] p-[25px] min-h-[180px] bg-white cursor-pointer transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)] shadow-[0_5px_25px_rgba(0,0,0,0.035)]" onclick="openTool('thumbnail')">
+            <div class="text-[34px] mb-[20px]">🎨</div>
+            <h3 class="text-[18px] font-bold mb-[9px]">Thumbnail Generator</h3>
+            <p class="text-slate-500 text-[14px] leading-[1.55]">Create professional thumbnails with AI.</p>
+        </div>
+
+        <!-- Voice Changer -->
+        <div class="border border-slate-200 rounded-[20px] p-[25px] min-h-[180px] bg-white cursor-pointer transition-all duration-200 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)] shadow-[0_5px_25px_rgba(0,0,0,0.035)]" onclick="openTool('voicechanger')">
+            <div class="text-[34px] mb-[20px]">🎙️</div>
+            <h3 class="text-[18px] font-bold mb-[9px]">Voice Changer</h3>
+            <p class="text-slate-500 text-[14px] leading-[1.55]">Upload voice samples and create reusable voices.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= MONTHLY PLAN ================= -->
+<section class="w-[min(900px,92%)] mx-auto pb-[100px]">
+    <div class="text-center mb-[30px]">
+        <h2 class="text-[35px] font-extrabold mb-[8px]">Monthly Plan</h2>
+        <p class="text-slate-500">Simple pricing for Zorvexa creators.</p>
+    </div>
+
+    <div class="max-w-[450px] mx-auto border border-slate-300 rounded-[25px] p-[32px] shadow-[0_20px_60px_rgba(0,0,0,0.07)] bg-white">
+        <h3 class="text-[22px] font-bold">Zorvexa Monthly</h3>
+        <div class="text-[48px] font-extrabold my-[12px]">
+            ₹200
+            <small class="text-[15px] text-slate-500 font-medium">/ month</small>
+        </div>
+        <div class="bg-slate-100 rounded-[13px] p-[14px] font-bold mb-[20px]">
+            ⚡ 2,000 Credits every month
+        </div>
+        <ul class="list-none mb-[25px] space-y-3">
+            <li class="py-2 border-b border-slate-100 text-slate-700">✓ All 8 AI tools</li>
+            <li class="py-2 border-b border-slate-100 text-slate-700">✓ 2,000 monthly credits</li>
+            <li class="py-2 border-b border-slate-100 text-slate-700">✓ 120+ AI voices</li>
+            <li class="py-2 border-b border-slate-100 text-slate-700">✓ Voice Changer</li>
+            <li class="py-2 border-b border-slate-100 text-slate-700">✓ Custom Saved Voices</li>
+            <li class="py-2 border-b border-slate-100 text-slate-700">✓ Automatic Emotion</li>
+            <li class="py-2 border-b border-slate-100 text-slate-700">✓ Generation History</li>
+        </ul>
+        <button class="bg-slate-900 text-white w-full py-3.5 rounded-[12px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer" onclick="openLogin()">
+            Get Monthly Plan
+        </button>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-slate-200 text-center text-slate-500 py-[30px] px-5 text-sm">
+    Zorvexa © 2026 — AI Creative Studio
+</footer>
+
+<!-- ================= TOOL MODAL ================= -->
+<div id="toolModal" class="fixed inset-0 bg-black/52 hidden items-center justify-center p-4 z-[9999]" onclick="closeToolOutside(event)">
+    <div class="modal-box w-[min(720px,100%)] max-h-[92vh] overflow-y-auto bg-white rounded-[24px] p-6 sm:p-[25px] shadow-[0_30px_100px_rgba(0,0,0,0.3)]">
+        <div class="flex justify-between items-center mb-[20px]">
+            <h2 id="toolTitle" class="text-[25px] font-extrabold">AI Tool</h2>
+            <button class="w-[40px] h-[40px] border-none rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-[25px] transition cursor-pointer" onclick="closeTool()">×</button>
+        </div>
+        <div id="toolContent"></div>
+    </div>
+</div>
+
+<!-- ================= LOGIN MODAL ================= -->
+<div id="loginModal" class="fixed inset-0 bg-black/52 hidden items-center justify-center p-4 z-[9999]" onclick="closeLoginOutside(event)">
+    <div class="login-box w-[min(420px,100%)] bg-white rounded-[23px] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.3)]">
+        <div class="flex justify-between items-center mb-[20px]">
+            <h2 class="text-[22px] font-extrabold">Login</h2>
+            <button class="w-[40px] h-[40px] border-none rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-[25px] transition cursor-pointer" onclick="closeLogin()">×</button>
+        </div>
+        <button class="bg-slate-100 text-slate-900 w-full py-3 rounded-[12px] font-bold mb-[15px] hover:bg-slate-200 transition flex items-center justify-center gap-2 cursor-pointer border border-slate-200">
+            <span>🌐</span> Continue with Google
+        </button>
+        <div class="mb-[17px]">
+            <label class="block font-bold mb-[8px] text-sm">Email</label>
+            <input type="email" placeholder="you@example.com" class="w-full border border-slate-300 rounded-[13px] px-[13px] py-[13px] text-[15px] outline-none focus:border-slate-800 transition">
+        </div>
+        <div class="mb-[17px]">
+            <label class="block font-bold mb-[8px] text-sm">Password</label>
+            <input type="password" placeholder="Password" class="w-full border border-slate-300 rounded-[13px] px-[13px] py-[13px] text-[15px] outline-none focus:border-slate-800 transition">
+        </div>
+        <button class="bg-slate-900 text-white w-full py-3 rounded-[12px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer mb-4" onclick="demoLogin()">
+            Login
+        </button>
+        <p class="text-center text-slate-500 text-[13px]">
+            Real authentication requires your backend.
+        </p>
+    </div>
+</div>
+
+<!-- ================= NOTIFICATION TOAST ================= -->
+<div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-[12px] shadow-xl z-[10000] transform translate-y-20 opacity-0 transition-all duration-300 text-sm font-semibold flex items-center gap-3">
+    <span id="toastMsg">Success</span>
+</div>
+
+<!-- ================= JAVASCRIPT LOGIC ================= -->
+<script>
+// Scroll to tools section
+function scrollToTools() {
+    document.getElementById("tools").scrollIntoView({ behavior: "smooth" });
+}
+
+// Toast notification helper (replaces alert)
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    const msg = document.getElementById("toastMsg");
+    msg.textContent = message;
+    toast.classList.remove("translate-y-20", "opacity-0");
+    setTimeout(() => {
+        toast.classList.add("translate-y-20", "opacity-0");
+    }, 3000);
+}
+
+// 120+ Voice Generator List helper
+function generateVoices() {
+    let voices = [
+        "Aarav (Hindi - Warm Narrator)", 
+        "Ananya (Hindi - Soft Storyteller)", 
+        "Kabir (Hindi - Deep Cinematic)", 
+        "Priya (Hindi - Energetic Podcaster)",
+        "Marcus (English US - Deep Professional)", 
+        "Emma (English UK - Calm Audiobooks)", 
+        "Sophia (English US - Dynamic Animation)",
+        "Liam (English AU - Casual Explainer)", 
+        "Mateo (Spanish - Dramatic)", 
+        "Juliette (French - Soft Romance)",
+        "Kenji (Japanese - Anime Hero)", 
+        "Mei (Mandarin - Documentary)", 
+        "Arjun (Tamil - Heroic)", 
+        "Lakshmi (Telugu - Graceful)",
+        "Rohan (Bengali - Deep Mystic)", 
+        "Simran (Punjabi - Vibrant)", 
+        "Zoya (Urdu - Poetic)"
+    ];
+    let html = "";
+    voices.forEach((v, index) => {
+        html += `<option value="${v}">Voice #${index + 1}: ${v}</option>`;
+    });
+    // Fill up to 120+ virtual entries
+    for (let i = voices.length + 1; i <= 125; i++) {
+        html += `<option value="Voice ${i}">Voice #${i} - Studio Preset ${i}</option>`;
+    }
+    return html;
+}
+
+// Modal Controllers
+const toolModal = document.getElementById("toolModal");
+const toolTitle = document.getElementById("toolTitle");
+const toolContent = document.getElementById("toolContent");
+const loginModal = document.getElementById("loginModal");
+
+function openLogin() {
+    loginModal.classList.remove("hidden");
+    loginModal.classList.add("flex");
+}
+
+function closeLogin() {
+    loginModal.classList.add("hidden");
+    loginModal.classList.remove("flex");
+}
+
+function closeLoginOutside(e) {
+    if (e.target === loginModal) closeLogin();
+}
+
+function demoLogin() {
+    closeLogin();
+    showToast("Successfully logged into Zorvexa Studio!");
+}
+
+function openTool(type) {
+    let title = "";
+    let html = "";
+
+    if (type === "tts") {
+        title = "Text to Speech Studio";
+        html = `
+            <div class="mb-4">
+                <label class="block font-bold mb-2 text-sm">Text / Script</label>
+                <textarea placeholder="Enter your complete script here for high quality speech generation..." class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 transition min-h-[140px] resize-vertical"></textarea>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block font-bold mb-2 text-sm">AI Voice — 120+ Options</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">${generateVoices()}</select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Language</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>Hindi</option>
+                        <option>English</option>
+                        <option>Hinglish</option>
+                        <option>Bengali</option>
+                        <option>Marathi</option>
+                        <option>Gujarati</option>
+                        <option>Tamil</option>
+                        <option>Telugu</option>
+                        <option>Kannada</option>
+                        <option>Malayalam</option>
+                        <option>Punjabi</option>
+                        <option>Urdu</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Voice Style & Emotion</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>Natural & Balanced</option>
+                        <option>Storytelling & Warm</option>
+                        <option>Cinematic Epic</option>
+                        <option>Anime & Expressive</option>
+                        <option>Horror & Suspenseful</option>
+                        <option>Deeply Emotional</option>
+                        <option>Documentary Narrator</option>
+                        <option>Professional Corporate</option>
+                        <option>Energetic Hype</option>
+                        <option>Calm Meditation</option>
+                        <option>Dramatic Trailer</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Audio Quality</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>Standard (Fast)</option>
+                        <option>High Definition (HD)</option>
+                        <option>Ultra Studio Grade</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Speed: <span id="speedVal">1.0x</span></label>
+                    <input type="range" min="0.5" max="2" step="0.1" value="1" class="w-full accent-slate-900 cursor-pointer" oninput="document.getElementById('speedVal').innerText = this.value + 'x'">
+                </div>
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Pitch Shift: <span id="pitchVal">0</span></label>
+                    <input type="range" min="-10" max="10" value="0" class="w-full accent-slate-900 cursor-pointer" oninput="document.getElementById('pitchVal').innerText = this.value">
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button class="bg-slate-100 text-slate-800 px-5 py-3 rounded-[12px] font-bold hover:bg-slate-200 transition cursor-pointer flex-1" onclick="clearFields(this)">Clear</button>
+                <button class="bg-slate-900 text-white px-6 py-3 rounded-[12px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer flex-2" onclick="simulateGeneration('ttsResult', '🔊 Voice generated successfully! 14 credits deducted.')">Generate Voice</button>
+            </div>
+            <div id="ttsResult" class="hidden mt-4 border border-dashed border-slate-300 bg-slate-50 rounded-[15px] p-4 text-slate-600 text-sm">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="font-bold text-slate-800">Preview Audio (0:24)</span>
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Ready</span>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-slate-200 flex items-center gap-3">
+                    <button class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold hover:scale-105 transition" onclick="showToast('Playing preview audio...')">▶</button>
+                    <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-slate-900 w-1/3 h-full rounded-full"></div>
+                    </div>
+                    <span class="text-xs text-slate-500">0:00 / 0:24</span>
+                </div>
+            </div>
+        `;
+    } 
+    else if (type === "image") {
+        title = "Text to Image Studio";
+        html = `
+            <div class="mb-4">
+                <label class="block font-bold mb-2 text-sm">Image Prompt</label>
+                <textarea placeholder="Describe the cinematic image, lighting, style, and details you want to create..." class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 transition min-h-[120px] resize-vertical"></textarea>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Aspect Ratio</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>1:1 (Square)</option>
+                        <option>16:9 (Cinematic Landscape)</option>
+                        <option>9:16 (Story / Reel)</option>
+                        <option>4:3 (Standard Photo)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Art Style</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>Photorealistic</option>
+                        <option>Anime & Manga</option>
+                        <option>3D Pixar Style</option>
+                        <option>Cyberpunk Neon</option>
+                        <option>Oil Painting</option>
+                        <option>Minimalist Vector</option>
+                    </select>
+                </div>
+            </div>
+            <button class="bg-slate-900 text-white w-full py-3.5 rounded-[12px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer mb-4" onclick="simulateGeneration('imageResult', '🖼️ Image generated successfully! 25 credits deducted.')">Generate Image</button>
+            <div id="imageResult" class="hidden border border-dashed border-slate-300 bg-slate-50 rounded-[15px] p-4 text-center">
+                <div class="relative rounded-xl overflow-hidden shadow-md max-h-[320px] bg-slate-200 flex items-center justify-center">
+                    <img src="https://placehold.co/800x450/111/fff?text=Zorvexa+AI+Generated+Masterpiece" alt="Generated" class="w-full object-cover">
+                </div>
+                <div class="mt-3 flex justify-center gap-2">
+                    <button class="bg-slate-900 text-white px-4 py-2 rounded-lg text-xs font-bold" onclick="showToast('Image downloaded!')">Download HD</button>
+                    <button class="bg-slate-200 text-slate-800 px-4 py-2 rounded-lg text-xs font-bold" onclick="showToast('Sent to Image Editor!')">Edit in Studio</button>
+                </div>
+            </div>
+        `;
+    }
+    else if (type === "editor") {
+        title = "AI Image Editor";
+        html = `
+            <div class="border-2 border-dashed border-slate-300 rounded-[18px] p-8 text-center cursor-pointer hover:bg-slate-50 transition mb-4 relative" onclick="document.getElementById('fileInput').click()">
+                <div class="text-[36px] mb-2">📤</div>
+                <b class="text-sm font-bold text-slate-800">Tap to upload or drop image here</b>
+                <p class="text-slate-500 text-xs mt-1">PNG, JPG, WEBP up to 25MB</p>
+                <input type="file" id="fileInput" accept="image/*" class="hidden" onchange="previewUploadedImage(this)">
+            </div>
+            <div id="editorWorkspace" class="hidden">
+                <div class="mb-4 rounded-xl overflow-hidden border border-slate-200 max-h-[260px] bg-black flex items-center justify-center">
+                    <img id="uploadedPreview" src="" alt="Uploaded" class="max-h-[260px] object-contain">
+                </div>
+                <div class="mb-4">
+                    <label class="block font-bold mb-2 text-sm">AI Editing Instruction</label>
+                    <input type="text" placeholder="e.g. Remove background, add cinematic sunset lighting, upscale 4k..." class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 transition">
+                </div>
+                <button class="bg-slate-900 text-white w-full py-3 rounded-[12px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer" onclick="simulateGeneration('editResult', '✨ Image edited successfully with AI!')">Apply AI Edit</button>
+            </div>
+            <div id="editResult" class="hidden mt-4 border border-dashed border-slate-300 bg-slate-50 rounded-[15px] p-4 text-emerald-700 font-semibold text-center text-sm">
+                ✓ AI Transformation applied! Result ready for download.
+            </div>
+        `;
+    }
+    else if (type === "story") {
+        title = "Text to Story & Script Studio";
+        html = `
+            <div class="mb-4">
+                <label class="block font-bold mb-2 text-sm">Story Concept / Plot</label>
+                <textarea placeholder="Write a brief idea or theme for your story or YouTube script..." class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 transition min-h-[120px] resize-vertical"></textarea>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Format</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>YouTube Video Script</option>
+                        <option>Short Story / Fiction</option>
+                        <option>Podcast Episode Script</option>
+                        <option>Cinematic Screenplay</option>
+                        <option>Blog Post / Article</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Tone & Mood</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>Engaging & Hype</option>
+                        <option>Suspenseful & Thriller</option>
+                        <option>Emotional & Touching</option>
+                        <option>Educational & Clear</option>
+                        <option>Humorous & Witty</option>
+                    </select>
+                </div>
+            </div>
+            <button class="bg-slate-900 text-white w-full py-3.5 rounded-[12px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer mb-4" onclick="simulateGeneration('storyResult', '📖 Story generated successfully!')">Generate Story / Script</button>
+            <div id="storyResult" class="hidden border border-slate-200 bg-slate-50 rounded-[15px] p-4 text-slate-700 text-sm max-h-[220px] overflow-y-auto leading-relaxed">
+                <h4 class="font-bold text-slate-900 mb-2">Generated Output:</h4>
+                <p>Fade in from absolute darkness. A low ambient synth hums in the background. The narrator speaks with quiet intensity: 'In a world driven by artificial intelligence, creation is no longer bound by human limitation...' [Full script continues below with structured timestamps and hook lines...]</p>
+            </div>
+        `;
+    }
+    else if (type === "storyboard") {
+        title = "Story to Storyboard";
+        html = `
+            <div class="mb-4">
+                <label class="block font-bold mb-2 text-sm">Paste Story Script</label>
+                <textarea placeholder="Paste your script or scenes here to automatically break them into visual storyboard prompts..." class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 transition min-h-[120px] resize-vertical"></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block font-bold mb-2 text-sm">Number of Key Scenes</label>
+                <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                    <option>4 Scenes (Quick Preview)</option>
+                    <option>8 Scenes (Standard Video)</option>
+                    <option>12 Scenes (Detailed Cinematic)</option>
+                </select>
+            </div>
+            <button class="bg-slate-900 text-white w-full py-3.5 rounded-[12px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer mb-4" onclick="simulateGeneration('boardResult', '🎬 Storyboard scenes generated!')">Create Storyboard</button>
+            <div id="boardResult" class="hidden space-y-3">
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs flex gap-3 items-center">
+                    <div class="w-16 h-12 bg-slate-300 rounded flex items-center justify-center font-bold text-slate-600">Scene 1</div>
+                    <div class="flex-1"><span class="font-bold">Opening Shot:</span> Wide drone shot over neon cityscape at twilight. Cinematic warm lighting.</div>
+                </div>
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs flex gap-3 items-center">
+                    <div class="w-16 h-12 bg-slate-300 rounded flex items-center justify-center font-bold text-slate-600">Scene 2</div>
+                    <div class="flex-1"><span class="font-bold">Close Up:</span> Protagonist looking at glowing holographic tablet in a dark room.</div>
+                </div>
+            </div>
+        `;
+    }
+    else if (type === "background") {
+        title = "Cinematic Background Generator";
+        html = `
+            <div class="mb-4">
+                <label class="block font-bold mb-2 text-sm">Background Prompt / Theme</label>
+                <textarea placeholder="e.g. Futuristic sci-fi command center, cozy wooden cabin with fireplace..." class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 transition min-h-[100px] resize-vertical"></textarea>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Resolution</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>4K Ultra HD (3840x2160)</option>
+                        <option>1080p Full HD (1920x1080)</option>
+                        <option>8K Masterpiece</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Lighting Vibe</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>Golden Hour Sunset</option>
+                        <option>Cyberpunk Neon Glow</option>
+                        <option>Moody & Atmospheric</option>
+                        <option>Bright Studio Lighting</option>
+                    </select>
+                </div>
+            </div>
+            <button class="bg-slate-900 text-white w-full py-3.5 rounded-[12px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer mb-4" onclick="simulateGeneration('bgResult', '🌄 Cinematic background generated!')">Generate Background</button>
+            <div id="bgResult" class="hidden rounded-xl overflow-hidden border border-slate-200 max-h-[220px]">
+                <img src="https://placehold.co/800x450/222/ddd?text=Zorvexa+Cinematic+Background" alt="Background" class="w-full object-cover">
+            </div>
+        `;
+    }
+    else if (type === "thumbnail") {
+        title = "AI Thumbnail Generator";
+        html = `
+            <div class="mb-4">
+                <label class="block font-bold mb-2 text-sm">Video Title / Core Topic</label>
+                <input type="text" placeholder="e.g. I Spent 7 Days Inside a Nuclear Bunker..." class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 transition">
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Thumbnail Style</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>MrBeast High-CTR Style</option>
+                        <option>Minimalist Tech Review</option>
+                        <option>Gaming Reaction & Neon</option>
+                        <option>Podcast Interview Split</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-2 text-sm">Main Emoticon / Expression</label>
+                    <select class="w-full border border-slate-300 rounded-[13px] p-3 text-sm outline-none focus:border-slate-800 bg-white">
+                        <option>Shocked / Surprised 😲</option>
+                        <option>Excited / Hype 🔥</option>
+                        <option>Curious / Focused 🤔</option>
+                        <option>Serious / Professional 💼</option>
+                    </select>
+                </div>
+            </div>
+            <button class="bg-slate-900 text-white w-full py-3.5 rounded-[12px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer mb-4" onclick="simulateGeneration('thumbResult', '🎨 High-CTR Thumbnail generated!')">Generate Thumbnail</button>
+            <div id="thumbResult" class="hidden rounded-xl overflow-hidden border border-slate-200">
+                <img src="https://placehold.co/1280x720/1a1a1a/fff?text=HIGH+CTR+THUMBNAIL" alt="Thumbnail" class="w-full object-cover">
+            </div>
+        `;
+    }
+    else if (type === "voicechanger") {
+        title = "Voice Changer & Sample Studio";
+        html = `
+            <div class="border-2 border-dashed border-slate-300 rounded-[18px] p-6 text-center cursor-pointer hover:bg-slate-50 transition mb-4" onclick="showToast('Sample audio uploaded!')">
+                <div class="text-[32px] mb-2">🎙️</div>
+                <b class="text-sm font-bold text-slate-800">Upload 10-second Voice Sample (.mp3 or .wav)</b>
+                <p class="text-slate-500 text-xs mt-1">For best results, upload clear speech without background noise.</p>
+            </div>
+            
+            <div class="bg-slate-50 border border-slate-200 rounded-[15px] p-4 mb-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-700">Sample #1: anchor_voice_clean.wav</span>
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Active Sample</span>
+                </div>
+                <audio controls class="w-full h-8">
+                    <source src="#" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <div class="mb-4 bg-amber-50 border border-amber-200 rounded-[15px] p-4">
+                <label class="block font-bold text-xs text-amber-900 mb-2">⚡ Automatic Emotion Detection Tagging</label>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-semibold">✓ Joy & Excitement</span>
+                    <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-semibold">✓ Dramatic Pause</span>
+                    <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-semibold">✓ Suspense Whisper</span>
+                    <span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-semibold">✓ Professional Tone</span>
+                </div>
+            </div>
+
+            <button class="bg-slate-900 text-white w-full py-3.5 rounded-[12px] font-bold hover:opacity-90 transition shadow-sm cursor-pointer" onclick="simulateGeneration('voiceResult', '🎙️ Reusable custom voice created and saved successfully!')">Save & Train Custom Voice</button>
+            <div id="voiceResult" class="hidden mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 font-semibold text-center text-xs">
+                ✨ Custom Voice clone is ready for Text-to-Speech generation!
+            </div>
+        `;
+    }
+
+    toolTitle.textContent = title;
+    toolContent.innerHTML = html;
+    toolModal.classList.remove("hidden");
+    toolModal.classList.add("flex");
+}
+
+function closeTool() {
+    toolModal.classList.add("hidden");
+    toolModal.classList.remove("flex");
+}
+
+function closeToolOutside(e) {
+    if (e.target === toolModal) closeTool();
+}
+
+function clearFields(btn) {
+    const parent = btn.closest('.modal-box');
+    const textareas = parent.querySelectorAll('textarea');
+    textareas.forEach(t => t.value = '');
+    showToast("Workspace fields cleared.");
+}
+
+function simulateGeneration(resultId, successMsg) {
+    showToast("Processing with AI model...");
+    setTimeout(() => {
+        const el = document.getElementById(resultId);
+        if (el) {
+            el.classList.remove("hidden");
+            el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        showToast(successMsg);
+    }, 800);
+}
+
+function previewUploadedImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("uploadedPreview").src = e.target.result;
+            document.getElementById("editorWorkspace").classList.remove("hidden");
+            showToast("Image loaded into editor!");
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+
+</body>
+</html>
