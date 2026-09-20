@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zorvexa — AI Creative Studio</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#ffffff;
+    color:#111;
+    min-height:100vh;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    height:72px;
+    border-bottom:1px solid #eaeaea;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(15px);
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    font-size:23px;
+    font-weight:800;
+}
+
+.logo{
+    width:38px;
+    height:38px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#111;
+    color:#fff;
+    font-weight:900;
+    font-size:21px;
+}
+
+.header-actions{
+    display:flex;
+    gap:10px;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+.btn{
+    border:none;
+    background:#111;
+    color:white;
+    padding:12px 20px;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:700;
+}
+
+.btn:hover{
+    opacity:.88;
+}
+
+.btn-light{
+    background:#f3f3f3;
+    color:#111;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    text-align:center;
+    padding:95px 20px 70px;
+}
+
+.hero h1{
+    font-size:clamp(42px,7vw,76px);
+    letter-spacing:-4px;
+    line-height:1;
+    margin-bottom:25px;
+}
+
+.hero p{
+    max-width:680px;
+    margin:auto;
+    color:#666;
+    font-size:18px;
+    line-height:1.7;
+    margin-bottom:30px;
+}
+
+/* ================= TOOLS ================= */
+
+.tools-section{
+    width:min(1180px,92%);
+    margin:auto;
+    padding-bottom:90px;
+}
+
+.section-heading{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.section-heading h2{
+    font-size:35px;
+    margin-bottom:8px;
+}
+
+.section-heading p{
+    color:#777;
+}
+
+.tools-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:17px;
+}
+
+.tool-card{
+    border:1px solid #e6e6e6;
+    border-radius:20px;
+    padding:25px;
+    min-height:180px;
+    background:#fff;
+    cursor:pointer;
+    transition:.2s;
+    box-shadow:0 5px 25px rgba(0,0,0,.035);
+}
+
+.tool-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+}
+
+.tool-icon{
+    font-size:34px;
+    margin-bottom:20px;
+}
+
+.tool-card h3{
+    font-size:18px;
+    margin-bottom:9px;
+}
+
+.tool-card p{
+    color:#777;
+    font-size:14px;
+    line-height:1.55;
+}
+
+/* ================= PRICING ================= */
+
+.pricing{
+    width:min(900px,92%);
+    margin:auto;
+    padding-bottom:100px;
+}
+
+.price-card{
+    max-width:450px;
+    margin:30px auto;
+    border:1px solid #dedede;
+    border-radius:25px;
+    padding:32px;
+    box-shadow:0 20px 60px rgba(0,0,0,.07);
+}
+
+.price-card h3{
+    font-size:22px;
+}
+
+.price{
+    font-size:48px;
+    font-weight:850;
+    margin:12px 0;
+}
+
+.price small{
+    font-size:15px;
+    color:#777;
+    font-weight:500;
+}
+
+.credit-box{
+    background:#f5f5f5;
+    border-radius:13px;
+    padding:14px;
+    font-weight:750;
+    margin-bottom:20px;
+}
+
+.plan-features{
+    list-style:none;
+    margin-bottom:25px;
+}
+
+.plan-features li{
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+    color:#444;
+}
+
+/* ================= MODAL ================= */
+
+/*
+ IMPORTANT:
+ Tool click अब page को scroll नहीं करेगा.
+ Modal हमेशा screen के center में खुलेगा.
+*/
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.52);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+    z-index:9999;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    width:min(720px,100%);
+    max-height:92vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:24px;
+    padding:25px;
+    box-shadow:0 30px 100px rgba(0,0,0,.3);
+    animation:popup .18s ease;
+}
+
+@keyframes popup{
+    from{
+        transform:scale(.94);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:25px;
+}
+
+.close-btn{
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:50%;
+    background:#f1f1f1;
+    font-size:25px;
+}
+
+/* ================= FORM ================= */
+
+.form-group{
+    margin-bottom:17px;
+}
+
+.form-group label{
+    display:block;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    border:1px solid #ddd;
+    border-radius:13px;
+    padding:13px;
+    font-family:inherit;
+    font-size:15px;
+    background:white;
+    outline:none;
+}
+
+textarea{
+    min-height:150px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:#888;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+}
+
+.action-row{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.result{
+    display:none;
+    margin-top:18px;
+    border:1px dashed #ccc;
+    background:#fafafa;
+    border-radius:15px;
+    padding:18px;
+    color:#666;
+}
+
+.result.show{
+    display:block;
+}
+
+/* ================= UPLOAD ================= */
+
+.upload-box{
+    border:2px dashed #ccc;
+    border-radius:18px;
+    padding:30px 20px;
+    text-align:center;
+    cursor:pointer;
+    margin-bottom:15px;
+}
+
+.upload-box:hover{
+    background:#fafafa;
+}
+
+.upload-box input{
+    display:none;
+}
+
+.upload-icon{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+.sample-list{
+    margin-bottom:15px;
+}
+
+.sample-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px;
+    border:1px solid #eee;
+    border-radius:12px;
+    margin-bottom:9px;
+}
+
+.sample-item span{
+    width:120px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    font-size:13px;
+}
+
+.sample-item audio{
+    flex:1;
+    min-width:0;
+}
+
+.remove-sample{
+    border:none;
+    background:#f1f1f1;
+    border-radius:8px;
+    padding:7px 10px;
+}
+
+/* ================= EMOTION ================= */
+
+.emotion-box{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    padding:15px;
+    background:#fafafa;
+    border:1px solid #eee;
+    border-radius:15px;
+    margin:15px 0;
+}
+
+.emotion-box input{
+    width:19px;
+    height:19px;
+    margin-top:3px;
+}
+
+.emotion-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:10px;
+}
+
+.emotion-tag{
+    background:#f0f0f0;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:12px;
+}
+
+/* ================= LOGIN ================= */
+
+.login-box{
+    width:min(420px,100%);
+    background:#fff;
+    border-radius:23px;
+    padding:28px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    border-top:1px solid #eee;
+    text-align:center;
+    color:#777;
+    padding:30px 20px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:850px){
+
+    .tools-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:550px){
+
+    header{
+        padding:0 18px;
+    }
+
+    .hero{
+        padding-top:65px;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    .tools-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .modal{
+        padding:8px;
+    }
+
+    .modal-box{
+        max-height:95vh;
+        border-radius:20px;
+        padding:20px;
+    }
+
+    .action-row{
+        flex-direction:column;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo-area">
+        <div class="logo">Z</div>
+        <span>Zorvexa</span>
+    </div>
+
+    <div class="header-actions">
+        <button class="btn" onclick="openLogin()">
+            Login
+        </button>
+    </div>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <h1>Create anything with AI.</h1>
+
+    <p>
+        Zorvexa is an AI creative studio for stories,
+        images, voices, thumbnails and visual content.
+    </p>
+
+    <button class="btn" onclick="scrollToTools()">
+        Start Creating
+    </button>
+
+</section>
+
+
+<!-- ================= TOOLS ================= -->
+
+<section class="tools-section" id="tools">
+
+    <div class="section-heading">
+
+        <h2>AI Tools</h2>
+
+        <p>
+            Tap any tool to open its workspace.
+        </p>
+
+    </div>
+
+
+    <div class="tools-grid">
+
+        <div class="tool-card" onclick="openTool('tts')">
+            <div class="tool-icon">🔊</div>
+            <h3>Text to Speech</h3>
+            <p>Convert text and scripts into natural AI voice.</p>
+        </div>
+
+
+        <div class="tool-card" onclick="openTool('image')">
+            <div class="tool-icon">🖼️</div>
+            <h3>Text to Image</h3>
+            <p>Create images from your text prompts.</p>
+        </div>
+
+
+        <div class="tool-card" onclick="openTool('editor')">
+            <div class="tool-icon">✏️</div>
+            <h3>Image Editor</h3>
+            <p>Upload and edit your images using AI.</p>
+        </div>
+
+
+        <div class="tool-card" onclick="openTool('story')">
+            <div class="tool-icon">📖</div>
+            <h3>Text to Story</h3>
+            <p>Create stories, scripts and creative content.</p>
+        </div>
+
+
+        <div class="tool-card" onclick="openTool('storyboard')">
+            <div class="tool-icon">🎬</div>
+            <h3>Story to Storyboard</h3>
+            <p>Convert your story into visual scenes.</p>
+        </div>
+
+
+        <div class="tool-card" onclick="openTool('background')">
+            <div class="tool-icon">🌄</div>
+            <h3>Background Generator</h3>
+            <p>Create cinematic backgrounds from prompts.</p>
+        </div>
+
+
+        <div class="tool-card" onclick="openTool('thumbnail')">
+            <div class="tool-icon">🎨</div>
+            <h3>Thumbnail Generator</h3>
+            <p>Create professional thumbnails with AI.</p>
+        </div>
+
+
+        <div class="tool-card" onclick="openTool('voicechanger')">
+            <div class="tool-icon">🎙️</div>
+            <h3>Voice Changer</h3>
+            <p>Upload voice samples and create reusable voices.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MONTHLY PLAN ================= -->
+
+<section class="pricing">
+
+    <div class="section-heading">
+
+        <h2>Monthly Plan</h2>
+
+        <p>
+            Simple pricing for Zorvexa creators.
+        </p>
+
+    </div>
+
+
+    <div class="price-card">
+
+        <h3>Zorvexa Monthly</h3>
+
+        <div class="price">
+            ₹200
+            <small>/ month</small>
+        </div>
+
+        <div class="credit-box">
+            ⚡ 2,000 Credits every month
+        </div>
+
+        <ul class="plan-features">
+
+            <li>✓ All 8 AI tools</li>
+
+            <li>✓ 2,000 monthly credits</li>
+
+            <li>✓ 120+ AI voices</li>
+
+            <li>✓ Voice Changer</li>
+
+            <li>✓ Custom Saved Voices</li>
+
+            <li>✓ Automatic Emotion</li>
+
+            <li>✓ Generation History</li>
+
+        </ul>
+
+
+        <button
+            class="btn"
+            style="width:100%"
+            onclick="openLogin()">
+
+            Get Monthly Plan
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    Zorvexa © 2026 — AI Creative Studio
+
+</footer>
+
+
+
+<!-- =====================================================
+                    TOOL MODAL
+===================================================== -->
+
+<div
+    id="toolModal"
+    class="modal"
+    onclick="closeToolOutside(event)"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2 id="toolTitle">
+                AI Tool
+            </h2>
+
+            <button
+                class="close-btn"
+                onclick="closeTool()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div id="toolContent"></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+                    LOGIN MODAL
+===================================================== -->
+
+<div
+    id="loginModal"
+    class="modal"
+    onclick="closeLoginOutside(event)"
+>
+
+    <div class="login-box">
+
+        <div class="modal-header">
+
+            <h2>Login</h2>
+
+            <button
+                class="close-btn"
+                onclick="closeLogin()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <button
+            class="btn btn-light"
+            style="width:100%;margin-bottom:15px"
+        >
+            Continue with Google
+        </button>
+
+
+        <div class="form-group">
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                placeholder="you@example.com"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                placeholder="Password"
+            >
+
+        </div>
+
+
+        <button
+            class="btn"
+            style="width:100%"
+            onclick="demoLogin()"
+        >
+            Login
+        </button>
+
+
+        <p
+            style="
+            text-align:center;
+            color:#777;
+            font-size:13px;
+            margin-top:15px;
+            "
+        >
+            Real authentication requires your backend.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+                    GENERAL
+===================================================== */
+
+function scrollToTools(){
+
+    document
+        .getElementById("tools")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+/* =====================================================
+                TOOL MODAL
+===================================================== */
+
+const toolModal =
+    document.getElementById("toolModal");
+
+const toolTitle =
+    document.getElementById("toolTitle");
+
+const toolContent =
+    document.getElementById("toolContent");
+
+
+function openTool(type){
+
+    let title = "";
+    let html = "";
+
+
+    /* ================= TTS ================= */
+
+    if(type === "tts"){
+
+        title = "Text to Speech";
+
+        html = `
+
+        <div class="form-group">
+
+            <label>
+                Text / Script
+            </label>
+
+            <textarea
+                placeholder="Enter your complete script..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>
+                    AI Voice — 120+
+                </label>
+
+                <select id="ttsVoice">
+
+                    ${generateVoices()}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Language
+                </label>
+
+                <select>
+
+                    <option>Hindi</option>
+                    <option>English</option>
+                    <option>Hinglish</option>
+                    <option>Bengali</option>
+                    <option>Marathi</option>
+                    <option>Gujarati</option>
+                    <option>Tamil</option>
+                    <option>Telugu</option>
+                    <option>Kannada</option>
+                    <option>Malayalam</option>
+                    <option>Punjabi</option>
+                    <option>Urdu</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>
+                    Voice Style
+                </label>
+
+                <select>
+
+                    <option>Natural</option>
+                    <option>Storytelling</option>
+                    <option>Cinematic</option>
+                    <option>Anime</option>
+                    <option>Horror</option>
+                    <option>Emotional</option>
+                    <option>Documentary</option>
+                    <option>Professional</option>
+                    <option>Energetic</option>
+                    <option>Calm</option>
+                    <option>Dramatic</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Quality
+                </label>
+
+                <select>
+
+                    <option>Standard</option>
+                    <option>High</option>
+                    <option>Ultra</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>
+                    Speed
+                </label>
+
+                <input
+                    type="range"
+                    min="0.5"
+                    max="2"
+                    step="0.1"
+                    value="1"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Pitch
+                </label>
+
+                <input
+                    type="range"
+                    min="-10"
+                    max="10"
+                    value="0"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="action-row">
+
+            <button
+                class="btn btn-light"
+                onclick="clearToolFields()"
+            >
+                Clear
+            </button>
+
+
+            <button
+                class="btn"
+                onclick="showResult('ttsResult')"
+            >
+                Generate Voice
+            </button>
+
+        </div>
+
+
+        <div
+            id="ttsResult"
+            class="result"
+        >
+            Your generated audio will appear here
+            after the backend TTS API is connected.
+        </div>
+
+        `;
+
+    }
+
+
+    /* ================= IMAGE ================= */
+
+    else if(type === "image"){
+
+        title = "Text to Image";
+
+        html = `
+
+        <div class="form-group">
+
+            <label>
+                Image Prompt
+            </label>
+
+            <textarea
+                placeholder="Describe the image you want..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>
+                    Aspect Ratio
+                </label>
+
+                <select>
+
+                    <option>1:1</option>
+                    <option>16:9</option>
+                    <option>9:16</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Quality
+                </label>
+
+                <select>
+
+                    <option>Standard</option>
+                    <option>HD</option>
+                    <option>Ultra</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="btn"
+            onclick="showResult('imageResult')"
+        >
+            Generate Image
+        </button>
+
+
+        <div
+            id="imageResult"
+            class="result"
+        >
+            Image generation API will return
+            the generated image here.
+        </div>
+
+        `;
+
+    }
+
+
+    /* ================= IMAGE EDITOR ================= */
+
+    else if(type === "editor"){
+
+        title = "Image Editor";
+
+        html = `
+
+        <div class="upload-box">
+
+            <label>
+
+                <div class="upload-icon">
+                    📤
+                </div>
+
+                <b>
+                    Tap to upload image
+                </b>
+
+                <br>
+
+                <span style="color:#777">
+                    PNG, JPG, WEBP
+                </span>
+
+                <input
+                    type="file"
+                    accept="image/*"
+                    onchange="previewImage(this)"
+                >
+
+            </label>
+
